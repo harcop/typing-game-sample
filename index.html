@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+    <title>Typing Demo</title>
+    <meta name="Author" content="Toluwap" />
+    <style> 
+        div {
+            font-size: 20px
+        }
+        .redWord {
+            color: red
+        }
+        .greenWord {
+            color: greenyellow
+        }
+        .yellowWord {
+            color: blue
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <p>Start Typing the letters below</p>
+        <p>--------------------------</p>
+        <div id="wordType"></div>
+    </div>
+
+    
+    <script>
+    
+        const txt = "hello world here";
+        const wordType = document.getElementById('wordType');
+        let pos = 0;
+        const arr = txt.split('');
+        const invalidKeys = ['Backspace', 'Shift', 'Meta', 'Control', 'Alt']
+        document.addEventListener('keyup', typingKey)
+        
+        
+        function setup() {
+            arr.forEach((ele, index) => {
+                const idName = `${ele}@${index}`.trim();
+                wordType.innerHTML += `<span id="${idName}">${ele}</span>`
+            })
+        }
+        function typingKey(e) {
+            const key = e.key;
+            const arrWord = arr[pos];
+            const idName = `${arrWord}@${pos}`.trim();
+            if(invalidKeys.includes(key)) {
+                return;
+            }
+            if(!arr[pos]) {
+                return;
+            }
+            pos += 1;
+            if(key === arrWord) {
+                document.getElementById(idName).classList.add('greenWord')
+            } else {
+                if(arrWord === ' ') {
+                    document.getElementById(idName).innerHTML = '*'
+                    document.getElementById(idName).classList.add('yellowWord')
+                    return;
+                }
+                document.getElementById(idName).classList.add('redWord')
+            }
+        }
+        setup()
+    </script>
+
+</body>
+</html>
